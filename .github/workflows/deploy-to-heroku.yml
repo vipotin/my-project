@@ -1,4 +1,4 @@
-name: Build, test, and Terraform init
+name: Build, test, and deploy to Heroku
 
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
@@ -68,7 +68,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -no-color
+        run: terraform plan -no-color -lock=false
         continue-on-error: true
         
       - name: Update Pull Request
