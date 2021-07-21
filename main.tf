@@ -7,19 +7,20 @@ terraform {
   }
 }
 
-#variable "heroku_email" {
-#  description = "Heroku email address"
-#}
+variable "heroku_email" {
+  description = "Heroku email address"
+}
 
-#variable "heroku_api_token" {
-#  description = "Heroku API token"
-#}
+variable "heroku_api_key" {
+  description = "Heroku API key"
+  sensitive = true
+}
 
 # Configure the Heroku provider
-#provider "heroku" {
-#  email   = var.heroku_email
-#  api_key = var.heroku_api_token
-#}
+provider "heroku" {
+  email   = "${var.heroku_email}"
+  api_key = "${var.heroku_api_key}"
+}
 
 # Create a new application
 resource "heroku_app" "dev" {
