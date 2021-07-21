@@ -5,6 +5,13 @@ terraform {
       version = "~> 4.0"
     }
   }
+    backend "remote" {
+      organization = "vipotin"
+
+      workspaces {
+        name = "my-project-ws"
+    }
+  }
 }
 
 variable "heroku_email" {
@@ -27,13 +34,12 @@ resource "heroku_app" "dev" {
   name      = "vipotin-devops-project"
   region    = "eu"
 }
+resource "heroku_build" "dev" {
+  app        = heroku_app.dev.name
+  buildpacks = ["https://github.com/heroku/heroku-buildpack-nodejs#latest"]
 
-terraform {
-  backend "remote" {
-    organization = "vipotin"
-
-    workspaces {
-      name = "my-project-ws"
-    }
+  source {
+    url     = "https://github.com/vipotin/my-project"
+    version = "1.0"
   }
 }
