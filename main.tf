@@ -33,13 +33,12 @@ provider "heroku" {
 resource "heroku_app" "dev" {
   name      = "vipotin-devops-project"
   region    = "eu"
+  stack     = "container"
 }
-resource "heroku_build" "dev" {
-  app        = heroku_app.dev.name
-  buildpacks = ["https://github.com/heroku/heroku-buildpack-nodejs#latest"]
 
+resource "heroku_build" "dev" {
+  app    = heroku_app.dev.name
   source {
-    url     = "https://github.com/vipotin/my-project"
-    version = "1.0"
+    path = "."
   }
 }
